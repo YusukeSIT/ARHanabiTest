@@ -25,15 +25,21 @@
   		      intersection.y += 0.5;
   		      new_box.setAttribute('position', intersection);
   		      //new_box.setAttribute('rotation', cam.getAttribute('rotation'));
-  		  }
+  		  	}
  		});
 
 		</script>
 	</head>
 	<body style="touch-action:none">
 
+		<!--仮UI-->
+
 		<div class="permission_ui">
 			<p class="permission_ui center_ui">画面をタッチしてください</p>
+		</div>
+
+		<div class="fireworks_button_ui">
+			<input type="button" class="deleted_ui" id="b1" value="点火" onclick="clicked();">
 		</div>
 
 		<!--3D空間-->
@@ -46,10 +52,8 @@
 			<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target";></a-entity> 
 
 			<!--rayの衝突用-->
-			<a-plane cursor-listener id="target" rotation="-90 0 0" position="0 0 0" scale="40 40 1" color="green" opacity="0"></a-plane>
+			<a-plane cursor-listener id="target" rotation="-90 0 0" position="0 0 0" scale="40 40 1" color="green" opacity="1	"></a-plane>
 		</a-scene>
-
-		<!--仮UI-->
 
 
 		<!--JS用-->
@@ -104,12 +108,11 @@
 						p.y = pos.y + 0.75;
 						p.z = pos.z - 0.46;
 						pipes[i].setAttribute('position', p);
-  		     			//pipes[i].setAttribute('rotation', cam.getAttribute('rotation'));
 					}
 
 				}
 			}
-		})
+		});
 		</script>
 		<script src="./data/tutorial.js"></script>
 	</body>

@@ -10,6 +10,7 @@ document.addEventListener('click', () => {
     del.setAttribute('class', 'deleted_ui');
   });
   document.getElementById('main').removeAttribute('style');
+  document.getElementById('b1').removeAttribute('class');
   if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
     DeviceMotionEvent.requestPermission()
                      .then((state) => {
