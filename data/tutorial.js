@@ -9,7 +9,7 @@ document.addEventListener('click', () => {
   document.querySelectorAll('.permission_ui').forEach((del) => {
     del.setAttribute('class', 'deleted_ui');
   });
-  document.getElementById('main').removeAttribute('style');
+  document.getElementById('main').setAttribute('style', 'position: static;');
   document.getElementById('b1').removeAttribute('class');
   if (window.DeviceMotionEvent && window.DeviceMotionEvent.requestPermission) {
     DeviceMotionEvent.requestPermission()
