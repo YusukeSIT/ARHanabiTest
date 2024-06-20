@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" charset="utf-8">
+		<link rel="stylesheet" href="./data/style.css" type="text/css">
+		<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+		<script>
+		AFRAME.registerComponent('cursor-listener', {
+    		init: function () {
+			this.el.addEventListener('raycaster-intersected', evt => {
+   		     this.raycaster = evt.detail.el;
+   		   });
+   		   this.el.addEventListener('raycaster-intersected-cleared', evt => {
+   		     this.raycaster = null;
+   		   });
+  		  },
+
+  		  // 毎フレームの処理
+  		  tick: function () {
+  		      if (!this.raycaster) { return; }  // Not intersecting.
+  		      let intersection = this.raycaster.components.raycaster.getIntersection(this.el).point;
+  		      if (!intersection) { return; } // Not intersecting
+  		      // 箱の座標を衝突点にセット
+  		      intersection.y += 0.5;
+  		      new_box.setAttribute('position', intersection);
+  		      //new_box.setAttribute('rotation', cam.getAttribute('rotation'));
+  		  }
+ 		});
+
+		</script>
+	</head>
+	<body style="touch-action:none">
+
+		<div class="permission_ui">
+			<p class="permission_ui center_ui">画面をタッチしてください</p>
+		</div>
+
+		<!--3D空間-->
+		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;" style="display: none; position: static;">
+			<a-entity id='camera' camera look-controls="touchEnabled: false;" position="0 0 0">
+				
+				<!--移動オブジェクトの移動先の取得-->
+				<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target";></a-entity> 
+
+				<!--rayの衝突用-->
+				<a-plane cursor-listener id="target" rotation="-90 0 0" position="0 -1.5 0" scale="25 25 1" color="green" opacity="0.7"></a-plane>
+
+			</a-entity>
+		</a-scene>
+
+		<!--仮UI-->
+
+
+		<!--JS用-->
+
+		<script>
+
+		var scene = document.querySelector('a-scene');
+		var pNumber = 12;
+		var pipes = [];
+		var childs = [];
+
+		for (let i = 0; i < pNumber; i++) {
+
+			let pipe = document.createElement('a-cylinder');
+
+			pipe.setAttribute('radius', '0.04');
+			pipe.setAttribute('height', '0.5');
+			pipe.setAttribute('color', 'red');
+			pipe.setAttribute('position', '0 -0.5 0');
+			pipes.push(pipe);
+			let pos = pipes[i].getAttribute('position');
+			pos.x = Math.random() * 25 - 12.5;
+			pos.z = Math.random() * 5 - 7;
+			pipes[i].setAttribute('position', pos);
+			pipes[i].setAttribute('id', i);
+			scene.appendChild(pipes[i]);
+
+			let bool = false;
+			childs.push(bool);
+		}
+
+
+		AFRAME.registerComponent('box-colider', {
+			tick: function () {
+				let pos = this.el.getAttribute('position');
+				for (let i = 0; i < pNumber; i++) {
+
+					let p = pipes[i].getAttribute('position');
+
+					if (!childs[i]) {
+
+						if (p.x > pos.x - 0.5 && p.x < pos.x + 0.5 &&
+							p.y > pos.y - 0.5 && p.y < pos.y + 0.5 &&
+							p.z > pos.z - 0.5 && p.z < pos.z + 0.5) {
+							childs[i] = true;
+						}
+
+					} else {
+
+						p.x = pos.x - 0.46 + (0.081 * i);
+						p.y = pos.y + 0.75;
+						p.z = pos.z - 0.46;
+						pipes[i].setAttribute('position', p);
+  		     			//pipes[i].setAttribute('rotation', cam.getAttribute('rotation'));
+					}
+
+				}
+			}
+		})
+		</script>
+		<script src="./data/tutorial.js"></script>
+	</body>
+</html>
