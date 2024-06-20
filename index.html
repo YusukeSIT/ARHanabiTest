@@ -38,7 +38,6 @@
 			<p class="permission_ui center_ui">画面をタッチしてください</p>
 		</div>
 
-		<input type="button" class="deleted_ui" id="b1" value="点火" onclick="clicked();">
 
 		<!--3D空間-->
 		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;" style="display: none; position: static;">
@@ -53,7 +52,8 @@
 			<a-plane cursor-listener id="target" rotation="-90 0 0" position="0 0 0" scale="40 40 1" color="green" opacity="0"></a-plane>
 		</a-scene>
 
-
+		
+		<input type="button" class="deleted_ui" id="b1" value="点火" onclick="clicked();">
 		<!--JS用-->
 
 		<script>
